@@ -43,10 +43,7 @@ class Annuity:
         rate = (1 - (1 + self.interest_rate) ** -self.time) / D(
             str(self.interest_rate)
         )
-        if not pv:
-            return float(self.cash_flow * rate)
-        else:
-            return float(self.cash_flow / rate)
+        return float(self.cash_flow / rate) if pv else float(self.cash_flow * rate)
 
     def present_value_of_annuity_due(self, pv: bool = False) -> float:
         """Calculate the present value of annuity due.
@@ -63,10 +60,7 @@ class Annuity:
             / self.interest_rate
             * (1 + self.interest_rate)
         )
-        if not pv:
-            return float(self.cash_flow * rate)
-        else:
-            return float(self.cash_flow / rate)
+        return float(self.cash_flow / rate) if pv else float(self.cash_flow * rate)
 
     def future_value_of_annuity(self, fv: bool = False) -> float:
         """Calculate the future value of annuity.
@@ -81,10 +75,7 @@ class Annuity:
         rate = ((1 + self.interest_rate) ** self.time - 1) / D(
             str(self.interest_rate)
         )
-        if not fv:
-            return float(self.cash_flow * rate)
-        else:
-            return float(self.cash_flow / rate)
+        return float(self.cash_flow / rate) if fv else float(self.cash_flow * rate)
 
     def future_value_of_annuity_due(self, fv: bool = False) -> float:
         """Calculate the future value of annuity due.
@@ -101,10 +92,7 @@ class Annuity:
             / self.interest_rate
             * (1 + self.interest_rate)
         )
-        if not fv:
-            return float(self.cash_flow * rate)
-        else:
-            return float(self.cash_flow / rate)
+        return float(self.cash_flow / rate) if fv else float(self.cash_flow * rate)
 
 
 class GrowingAnnuity:
@@ -130,17 +118,10 @@ class GrowingAnnuity:
         if self.interest_rate == self.growth_rate:
             # pv = c * n/(1+i)
             rate = self.time / (1 + self.interest_rate)
-            if not pv:
-                return float(self.cash_flow * rate)
-            else:
-                return float(self.cash_flow / rate)
         else:
             rate = (1 - ((1 + self.growth_rate) / (1 + self.interest_rate))
                     ** self.time) / (self.interest_rate - self.growth_rate)
-            if not pv:
-                return float(self.cash_flow * rate)
-            else:
-                return float(self.cash_flow / rate)
+        return float(self.cash_flow / rate) if pv else float(self.cash_flow * rate)
 
     def present_value_of_growing_annuity_due(self, pv: bool = False) -> float:
         """Calculate the present value of growing annuity due.
@@ -156,21 +137,14 @@ class GrowingAnnuity:
         if self.interest_rate == self.growth_rate:
             # pv = c * n/(1+i) * (1 + i)
             rate = self.time / (1 + self.interest_rate) * \
-                (1 + self.interest_rate)
-            if not pv:
-                return float(self.cash_flow * rate)
-            else:
-                return float(self.cash_flow / rate)
+                    (1 + self.interest_rate)
         else:
             rate = (
                 1 + self.interest_rate) * (1 - ((1 + self.growth_rate) ** self.time
                                                 * (1 + self.interest_rate) ** -self.time)
                                            ) / (self.interest_rate - self.growth_rate)
 
-            if not pv:
-                return float(self.cash_flow * rate)
-            else:
-                return float(self.cash_flow / rate)
+        return float(self.cash_flow / rate) if pv else float(self.cash_flow * rate)
 
     def future_value_of_growing_annuity(self, fv: bool = False) -> float:
         """Calculate the future value of growing annuity.
@@ -186,19 +160,12 @@ class GrowingAnnuity:
         if self.interest_rate == self.growth_rate:
             # fv = c * (1+i)** (t-1)
             rate = self.time * (1 + self.interest_rate) ** (self.time - 1)
-            if not fv:
-                return float(self.cash_flow * rate)
-            else:
-                return float(self.cash_flow / rate)
         else:
             rate = (
                 (1 + self.interest_rate) ** self.time
                 - (1 + self.growth_rate) ** self.time
             ) / (self.interest_rate - self.growth_rate)
-            if not fv:
-                return float(self.cash_flow * rate)
-            else:
-                return float(self.cash_flow / rate)
+        return float(self.cash_flow / rate) if fv else float(self.cash_flow * rate)
 
     def future_value_of_growing_annuity_due(self, fv: bool = False) -> float:
         """Calculate the future value of growing annuity due.
@@ -214,17 +181,10 @@ class GrowingAnnuity:
         if self.interest_rate == self.growth_rate:
             # fv = c * (1+i)** (t)
             rate = self.time * (1 + self.interest_rate) ** (self.time)
-            if not fv:
-                return float(self.cash_flow * rate)
-            else:
-                return float(self.cash_flow / rate)
         else:
             rate = (
                 (1 + self.interest_rate) * ((1 + self.interest_rate)
                                             ** self.time - (1 + self.growth_rate) ** self.time)
                 / (self.interest_rate - self.growth_rate)
             )
-            if not fv:
-                return float(self.cash_flow * rate)
-            else:
-                return float(self.cash_flow / rate)
+        return float(self.cash_flow / rate) if fv else float(self.cash_flow * rate)
